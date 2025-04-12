@@ -1,0 +1,2 @@
+# parameta
+Prueba técnica parameta
