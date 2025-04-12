@@ -29,7 +29,7 @@ public class SoapConfig extends WsConfigurerAdapter {
         DefaultWsdl11Definition def = new DefaultWsdl11Definition();
         def.setPortTypeName("EmpleadoPort");
         def.setLocationUri("/ws");
-        def.setTargetNamespace("http://127.0.0.1/empleado");
+        def.setTargetNamespace("http://127.0.0.1:8081/empleado");
         def.setSchema(schema);
         return def;
     }

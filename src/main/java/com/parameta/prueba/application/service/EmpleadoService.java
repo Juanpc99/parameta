@@ -20,8 +20,7 @@ public class EmpleadoService implements RegistrarEmpleadosUseCase {
     public Empleado registrarEmpleado(Empleado empleado) throws Exception{
 
         empleado.validaciones();
-        empleado.calcularEdad();
-        empleado.calcularAntiguedad();
+        empleado.calcularTiempoRelativo();
 
         soapPort.enviarEmpleado(empleado);
 

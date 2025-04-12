@@ -18,7 +18,7 @@ public class GuardarEmpleadoEndpoint {
         this.repository = repository;
     }
 
-    private static final String NAMESPACE_URI = "http://127.0.0.1/empleado";
+    private static final String NAMESPACE_URI = "http://127.0.0.1:8081/empleado";
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "guardarEmpleadoRequest")
     @ResponsePayload

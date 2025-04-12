@@ -6,6 +6,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Entity
 @Table(name = "empleados")
@@ -33,10 +35,10 @@ public class Empleado {
     private String numeroDocumento;
 
     @Column(name = "fecha_nacimiento", nullable = false)
-    private LocalDate fechaNacimiento;
+    private Date fechaNacimiento;
 
     @Column(name = "fecha_vinculacion", nullable = false)
-    private LocalDate fechaVinculacion;
+    private Date fechaVinculacion;
 
     @Column(name = "cargo", nullable = false, length = 50)
     private String cargo;
@@ -46,10 +48,10 @@ public class Empleado {
 
 
     @Transient
-    private String edad;
+    private TiempoRelativo edad;
 
     @Transient
-    private String antiguedad;
+    private TiempoRelativo antiguedad;
 
     public void validaciones() throws Exception{
         if (nombres == null || nombres.isBlank()) throw new IllegalArgumentException("Nombres requeridos");
@@ -60,24 +62,43 @@ public class Empleado {
         if (fechaVinculacion == null) throw  new IllegalArgumentException("Fecha de vinculacion requerida");
         if (cargo == null || cargo.isBlank()) throw new IllegalArgumentException("Cargo es requerido");
         if (salario == null || salario <= 0) throw new IllegalArgumentException("Salario es requerido");
-
+        validarConsitenciaFechas();
         if (!esMayorDeEdad()) throw new IllegalArgumentException("Debe ser mayor de edad");
     }
 
+    public void calcularTiempoRelativo() {
+        this.edad = formatearFechasPeriod(Period.between(fromDateToLocalDate(fechaNacimiento), LocalDate.now()));
+        this.antiguedad = formatearFechasPeriod(Period.between(fromDateToLocalDate(fechaVinculacion), LocalDate.now()));
+
+
+    }
+
     private boolean esMayorDeEdad() {
-        return Period.between(fechaNacimiento, LocalDate.now()).getYears() >= 18;
+        Integer anos = Period.between(fromDateToLocalDate(fechaNacimiento), LocalDate.now()).getYears();
+        return  anos >= 18;
 
     }
 
-    public void calcularEdad() {
-        this.edad = formatearFechasPeriod(Period.between(fechaNacimiento, LocalDate.now()));
+    private TiempoRelativo formatearFechasPeriod(Period periodo) {
+
+        Integer anos = periodo.getYears();
+        Integer meses = periodo.getMonths();
+        Integer dias = periodo.getDays();
+
+        return new TiempoRelativo(anos, meses, dias);
     }
 
-    public void calcularAntiguedad() {
-        this.antiguedad = formatearFechasPeriod(Period.between(fechaVinculacion, LocalDate.now()));
+    private LocalDate fromDateToLocalDate (Date fecha) {
+        return fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
-    private String formatearFechasPeriod(Period periodo) {
-        return periodo.getYears() + " años, " + periodo.getMonths() + " meses, " + periodo.getDays() + " dias";
+    private void validarConsitenciaFechas() {
+        if(this.fechaNacimiento.after(new Date())) {
+            throw new IllegalArgumentException("La fecha de nacimiento no puede ser mayor a la fecha actual");
+        }
+        if(this.fechaVinculacion.after(new Date())) {
+            throw new IllegalArgumentException("La fecha de vinculacion no puede ser mayor igual a la fecha actual");
+        }
+
     }
 }

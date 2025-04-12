@@ -23,8 +23,8 @@ public class EmpleadoController {
 
     @GetMapping("/save")
     public ResponseEntity<?> guardarEmpleado(@ModelAttribute EmpleadoRequest empleado) {
-        Empleado fromDto = mapper.toDomain(empleado);
         try {
+            Empleado fromDto = mapper.toDomain(empleado);
             return ResponseEntity.ok(useCase.registrarEmpleado(fromDto));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
