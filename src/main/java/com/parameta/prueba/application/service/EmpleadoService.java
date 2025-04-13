@@ -2,7 +2,6 @@ package com.parameta.prueba.application.service;
 
 import com.parameta.prueba.domain.model.Empleado;
 import com.parameta.prueba.domain.ports.in.RegistrarEmpleadosUseCase;
-import com.parameta.prueba.domain.ports.out.EmpleadoRepository;
 import com.parameta.prueba.domain.ports.out.EmpleadoSoapPort;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +14,7 @@ public class EmpleadoService implements RegistrarEmpleadosUseCase {
     public EmpleadoService(EmpleadoSoapPort soapPort){
         this.soapPort = soapPort;
     }
+
 
     @Override
     public Empleado registrarEmpleado(Empleado empleado) throws Exception{

@@ -24,7 +24,7 @@ public class SoapConfig extends WsConfigurerAdapter {
         return new ServletRegistrationBean<>(servlet, "/ws/*");
     }
 
-    @Bean
+    @Bean(name = "empleado")
     public DefaultWsdl11Definition defaultWsdl11Definition(XsdSchema schema) {
         DefaultWsdl11Definition def = new DefaultWsdl11Definition();
         def.setPortTypeName("EmpleadoPort");

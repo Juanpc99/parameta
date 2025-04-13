@@ -1,9 +1,9 @@
 package com.parameta.prueba.domain.model;
 
 
-import jakarta.persistence.*;
 import lombok.*;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
@@ -54,13 +54,13 @@ public class Empleado {
     private TiempoRelativo antiguedad;
 
     public void validaciones() throws Exception{
-        if (nombres == null || nombres.isBlank()) throw new IllegalArgumentException("Nombres requeridos");
-        if (apellidos == null || apellidos.isBlank()) throw new IllegalArgumentException("Apellidos requeridos");
-        if (tipoDocumento == null || tipoDocumento.isBlank()) throw new IllegalArgumentException("Tipo de documento requerido");
-        if (numeroDocumento == null || numeroDocumento.isBlank()) throw new IllegalArgumentException("Numero de documento requerido");
+        if (nombres == null || nombres.trim().isEmpty()) throw new IllegalArgumentException("Nombres requeridos");
+        if (apellidos == null || apellidos.trim().isEmpty()) throw new IllegalArgumentException("Apellidos requeridos");
+        if (tipoDocumento == null || tipoDocumento.trim().isEmpty()) throw new IllegalArgumentException("Tipo de documento requerido");
+        if (numeroDocumento == null || numeroDocumento.trim().isEmpty()) throw new IllegalArgumentException("Numero de documento requerido");
         if (fechaNacimiento == null) throw new IllegalArgumentException("Fecha de nacimiento requerida");
         if (fechaVinculacion == null) throw  new IllegalArgumentException("Fecha de vinculacion requerida");
-        if (cargo == null || cargo.isBlank()) throw new IllegalArgumentException("Cargo es requerido");
+        if (cargo == null || cargo.trim().isEmpty()) throw new IllegalArgumentException("Cargo es requerido");
         if (salario == null || salario <= 0) throw new IllegalArgumentException("Salario es requerido");
         validarConsitenciaFechas();
         if (!esMayorDeEdad()) throw new IllegalArgumentException("Debe ser mayor de edad");
@@ -69,8 +69,6 @@ public class Empleado {
     public void calcularTiempoRelativo() {
         this.edad = formatearFechasPeriod(Period.between(fromDateToLocalDate(fechaNacimiento), LocalDate.now()));
         this.antiguedad = formatearFechasPeriod(Period.between(fromDateToLocalDate(fechaVinculacion), LocalDate.now()));
-
-
     }
 
     private boolean esMayorDeEdad() {

@@ -1,0 +1,56 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://127.0.0.1/empleado" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://127.0.0.1:8081/empleado" targetNamespace="http://127.0.0.1:8081/empleado">
+    <wsdl:types>
+        <xs:schema xmlns:tns="http://127.0.0.1/empleado" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://127.0.0.1/empleado">
+            <xs:element name="guardarEmpleadoRequest">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="nombres" type="xs:string"/>
+                        <xs:element name="apellidos" type="xs:string"/>
+                        <xs:element name="tipoDocumento" type="xs:string"/>
+                        <xs:element name="numeroDocumento" type="xs:string"/>
+                        <xs:element name="fechaNacimiento" type="xs:date"/>
+                        <xs:element name="fechaVinculacion" type="xs:date"/>
+                        <xs:element name="cargo" type="xs:string"/>
+                        <xs:element name="salario" type="xs:double"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="guardarEmpleadoResponse">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="mensaje" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="guardarEmpleadoRequest">
+        <wsdl:part element="sch:guardarEmpleadoRequest" name="guardarEmpleadoRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="guardarEmpleadoResponse">
+        <wsdl:part element="sch:guardarEmpleadoResponse" name="guardarEmpleadoResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="EmpleadoPort">
+        <wsdl:operation name="guardarEmpleado">
+            <wsdl:input message="tns:guardarEmpleadoRequest" name="guardarEmpleadoRequest"> </wsdl:input>
+            <wsdl:output message="tns:guardarEmpleadoResponse" name="guardarEmpleadoResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="EmpleadoPortSoap11" type="tns:EmpleadoPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="guardarEmpleado">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="guardarEmpleadoRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="guardarEmpleadoResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="EmpleadoPortService">
+        <wsdl:port binding="tns:EmpleadoPortSoap11" name="EmpleadoPortSoap11">
+            <soap:address location="http://localhost:8081/ws"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
