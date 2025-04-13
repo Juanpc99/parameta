@@ -64,7 +64,7 @@ El servicio REST retorna un objeto `Empleado` con la siguiente estructura JSON:
 
 - De esta forma, se cumple con el requerimiento de que el servicio REST **no realice el guardado directo**, sino que delegue esta responsabilidad al **servicio SOAP como intermediario**.
 
-- Los archivos de la carpeta soap.cliet se generaron con el comando wsimport -keep -p com.parameta.soap.client http://localhost:8081/ws/empleado.wsdl
+- Los archivos de la carpeta soap.cliet se generaron con el comando **`wsimport -keep -p com.parameta.soap.client http://localhost:8081/ws/empleado.wsdl`**
 
 - Se utilizo Java 8 para poder soportar SOAP de manera nativa en el JDK
 
